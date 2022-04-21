@@ -10,7 +10,9 @@ builder.Services
 			x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 		});
 
-builder.Services.AddHttpClient();
+DomainDrivenDesignWithCqrs.AppLayer.Services.Registration.Register(
+	builder.Services,
+	builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

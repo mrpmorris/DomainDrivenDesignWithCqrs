@@ -1,6 +1,6 @@
 ﻿namespace DomainDrivenDesignWithCqrs.AppLayer.Services;
 
-public class IDateTimeService
+internal class IDateTimeService
 {
 	DateTime UtcNow { get; }
 	DateTime UtcToday { get; }
@@ -8,6 +8,6 @@ public class IDateTimeService
 
 internal class DateTimeService : IDateTimeService
 {
-	public DateTime UtcNow => DateTime.UtcNow;
-	public DateTime UtcToday => DateTime.UtcNow.Date;
+	public static DateTime UtcNow => DateTime.UtcNow;
+	public static DateTime UtcToday => DateTime.UtcNow.Date;
 }
