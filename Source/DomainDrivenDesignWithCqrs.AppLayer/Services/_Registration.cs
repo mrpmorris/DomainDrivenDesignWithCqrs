@@ -1,8 +1,9 @@
 ﻿using DomainDrivenDesignWithCqrs.AppLayer.Persistence;
+using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using FluentValidation;
 
 namespace DomainDrivenDesignWithCqrs.AppLayer.Services;
 
@@ -13,6 +14,8 @@ public static class Registration
 		ArgumentNullException.ThrowIfNull(services);
 		ArgumentNullException.ThrowIfNull(configuration);
 		services.AddHttpClient();
+		services.AddMediatR(typeof(Registration).Assembly);
+		services.AddAutoMapper(typeof(Registration));
 		services.AddScoped<IDateTimeService, DateTimeService>();
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
 		services.AddDbContext<ApplicationDbContext>(options =>
