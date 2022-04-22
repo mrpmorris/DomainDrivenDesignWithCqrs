@@ -15,7 +15,18 @@ internal abstract class RepositoryBase<T>
 	where T : AggregateRoot
 {
 	protected readonly ApplicationDbContext DbContext;
+	/// <summary>
+	///		Descendant classes should return the correct DbSet from <see cref="DbContext"/>
+	/// </summary>
 	protected abstract DbSet<T> Collection { get; }
+	/// <summary>
+	///		When an aggregate root consists of multiple objects
+	///		(e.g. PurchaseOrder 1..* PurcharOrderLine) then these
+	///		should be included when fetched for modification, so the
+	///		aggregate is updated in its entirety, and to avoid lazy loading.
+	/// </summary>
+	/// <param name="query"></param>
+	/// <returns></returns>
 	protected abstract IQueryable<T> IncludeAggregateParts(IQueryable<T> query);
 
 	private readonly Dictionary<Guid, T> Cache = new();
@@ -195,7 +206,11 @@ internal abstract class RepositoryBase<T>
 	///		Called each time an <see cref="AggregateRoot"/> is loaded via one
 	///		of the other repository methods. This enables descendant repository classes
 	///		to keep secondary caches based on different entity properties, e.g.
-	///		a cache by Organisation.Name
+	///		a cache by Organisation.Code
+	///		<para>
+	///			Note that the keys should be immutable properties, otherwise
+	///			the cache lookup will become invalid.
+	///		</para>
 	/// </summary>
 	/// <param name="entity">The entity that was loaded</param>
 	protected virtual void AggregateLoaded(T entity)

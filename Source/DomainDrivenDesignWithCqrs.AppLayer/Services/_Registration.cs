@@ -1,4 +1,5 @@
 ﻿using DomainDrivenDesignWithCqrs.AppLayer.Persistence;
+using DomainDrivenDesignWithCqrs.AppLayer.Persistence.Repositories;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ public static class Registration
 			options.UseSqlServer(configuration.GetConnectionString("default"));
 		});
 		RegisterValidators(services);
+		RegisterRepositories(services);
 	}
 
 	private static void RegisterValidators(IServiceCollection services)
@@ -32,5 +34,10 @@ public static class Registration
 		services.AddValidatorsFromAssemblyContaining<Domain.EntityBase>(includeInternalTypes: true);
 		services.AddScoped<IValidationService, ValidationService>();
 		services.AddScoped<IDomainInvariantsGuard, DomainInvariantsGuard>();
+	}
+
+	private static void RegisterRepositories(IServiceCollection services)
+	{
+		services.AddScoped<IOrganisationRepository, OrganisationRepository>();
 	}
 }
