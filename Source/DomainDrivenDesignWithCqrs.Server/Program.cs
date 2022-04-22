@@ -2,9 +2,8 @@ using System.Text.Json.Serialization;
 using DomainDrivenDesignWithCqrs.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Services
-		.AddControllers(x => x.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true)
+		.AddMvcCore()
 		.AddJsonOptions(x =>
 		{
 			x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -15,7 +14,6 @@ DomainDrivenDesignWithCqrs.AppLayer.Services.Registration.Register(
 	builder.Services,
 	builder.Configuration);
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -37,13 +35,7 @@ else
 }
 
 app.UseHttpsRedirection();
-
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
-
-app.UseRouting();
-
-app.MapControllers();
 app.MapFallbackToFile("index.html");
-
 app.Run();
