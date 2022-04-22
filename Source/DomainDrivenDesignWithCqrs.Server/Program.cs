@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using DomainDrivenDesignWithCqrs.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.MapApplicationApiEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

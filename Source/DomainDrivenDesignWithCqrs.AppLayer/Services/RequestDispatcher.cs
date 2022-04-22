@@ -15,7 +15,7 @@ public interface IRequestDispatcher
 	/// <param name="request">The request</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>Response of type TResponse, which must descend from <see cref="ResponseBase"/></returns>
-	Task<TResponse> Execute<TResponse>(
+	Task<TResponse> ExecuteAsync<TResponse>(
 		IRequest<TResponse> request,
 		CancellationToken cancellationToken = default)
 		where TResponse : ResponseBase, new();
@@ -30,7 +30,7 @@ internal class RequestDispatcher : IRequestDispatcher
 		Mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 	}
 
-	public Task<TResponse> Execute<TResponse>(
+	public Task<TResponse> ExecuteAsync<TResponse>(
 		IRequest<TResponse> request,
 		CancellationToken cancellationToken = default)
 		where TResponse : ResponseBase, new()
