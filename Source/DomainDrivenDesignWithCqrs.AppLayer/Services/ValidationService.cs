@@ -31,6 +31,8 @@ internal class ValidationService : IValidationService
 		while (t != typeof(object))
 		{
 			IValidator validator = ValidatorFactory.GetValidator(t);
+			t = t.BaseType!;
+
 			if (validator is null)
 				continue;
 			hasValidator = true;

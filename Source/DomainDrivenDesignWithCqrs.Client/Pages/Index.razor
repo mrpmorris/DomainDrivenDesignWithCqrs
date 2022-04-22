@@ -2,8 +2,14 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Create organisation placeholder</h1>
 
-Welcome to your new app.
+<EditForm Model=@Command>
+    <div>
+        Name <InputText @bind-Value=Command.Name/>
+    </div>
+    <div>
+        <button @onclick=CreateAsync>Create</button>
+    </div>
+</EditForm>
 
-<SurveyPrompt Title="How is Blazor working for you?" />

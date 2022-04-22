@@ -15,7 +15,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DomainDrivenDesignWithCqrs.Contracts.Validation\DomainDrivenDesignWithCqrs.Contracts.Validation.csproj" />
     <ProjectReference Include="..\DomainDrivenDesignWithCqrs.Contracts\DomainDrivenDesignWithCqrs.Contracts.csproj" />
   </ItemGroup>
 

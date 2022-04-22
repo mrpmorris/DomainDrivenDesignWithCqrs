@@ -1,4 +1,5 @@
-﻿using DomainDrivenDesignWithCqrs.AppLayer.Persistence;
+﻿using DomainDrivenDesignWithCqrs.AppLayer.Cqrs;
+using DomainDrivenDesignWithCqrs.AppLayer.Persistence;
 using DomainDrivenDesignWithCqrs.AppLayer.Persistence.Repositories;
 using FluentValidation;
 using MediatR;
@@ -19,6 +20,8 @@ public static class Registration
 		services.AddAutoMapper(typeof(Registration));
 		services.AddScoped<IDateTimeService, DateTimeService>();
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
+		services.AddScoped<IRequestDispatcher, RequestDispatcher>();
+		services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidatorMiddleware<,>));
 		services.AddDbContext<ApplicationDbContext>(options =>
 		{
 			options.UseSqlServer(configuration.GetConnectionString("default"));
@@ -30,10 +33,10 @@ public static class Registration
 	private static void RegisterValidators(IServiceCollection services)
 	{
 		services.AddScoped<IValidatorFactory, ServiceProviderValidatorFactory>();
-		services.AddValidatorsFromAssemblyContaining<Contracts.Validation.Class1>(includeInternalTypes: true);
-		services.AddValidatorsFromAssemblyContaining<Domain.EntityBase>(includeInternalTypes: true);
 		services.AddScoped<IValidationService, ValidationService>();
 		services.AddScoped<IDomainInvariantsGuard, DomainInvariantsGuard>();
+		services.AddValidatorsFromAssemblyContaining<Contracts.ValidationError>(includeInternalTypes: true);
+		services.AddValidatorsFromAssemblyContaining<Domain.EntityBase>(includeInternalTypes: true);
 	}
 
 	private static void RegisterRepositories(IServiceCollection services)
