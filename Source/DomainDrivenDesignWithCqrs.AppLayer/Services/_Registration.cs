@@ -25,8 +25,8 @@ public static class Registration
 	private static void RegisterValidators(IServiceCollection services)
 	{
 		services.AddScoped<IValidatorFactory, ServiceProviderValidatorFactory>();
-		services.AddValidatorsFromAssemblyContaining<Contracts.Validation.Class1>();
-		services.AddValidatorsFromAssemblyContaining<Domain.EntityBase>();
+		services.AddValidatorsFromAssemblyContaining<Contracts.Validation.Class1>(includeInternalTypes: true);
+		services.AddValidatorsFromAssemblyContaining<Domain.EntityBase>(includeInternalTypes: true);
 		services.AddScoped<IValidationService, ValidationService>();
 		services.AddScoped<IDomainInvariantsGuard, DomainInvariantsGuard>();
 	}

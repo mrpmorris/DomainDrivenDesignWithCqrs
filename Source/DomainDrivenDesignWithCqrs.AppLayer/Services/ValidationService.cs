@@ -12,7 +12,6 @@ public interface IValidationService
 
 internal class ValidationService : IValidationService
 {
-	private readonly ImmutableArray<ValidationError> EmptyErrors = ImmutableArray.Create<ValidationError>();
 	private readonly IValidatorFactory ValidatorFactory;
 
 	public ValidationService(IValidatorFactory validatorFactory)
@@ -24,18 +23,30 @@ internal class ValidationService : IValidationService
 	{
 		ArgumentNullException.ThrowIfNull(instance);
 
-		IValidator validator = ValidatorFactory.GetValidator(instance.GetType());
-		if (mustHaveAValidator && validator is null)
+		bool hasValidator = false;
+		Type t = instance.GetType();
+		var validationErrors = ImmutableArray.CreateBuilder<ValidationError>();
+		var validationContext = new ValidationContext<object>(instance);
+
+		while (t != typeof(object))
+		{
+			IValidator validator = ValidatorFactory.GetValidator(t);
+			if (validator is null)
+				continue;
+			hasValidator = true;
+
+			ValidationResult validationResult = await validator.ValidateAsync(validationContext);
+			if (!validationResult.IsValid)
+			{
+				validationErrors.AddRange(
+					validationResult
+						.Errors
+						.Select(x => new ValidationError(path: x.PropertyName, message: x.ErrorMessage)));
+			}
+		}
+		if (mustHaveAValidator && !hasValidator)
 			throw new InvalidOperationException($"Type \"{instance.GetType().Name}\" should have a validator");
 
-		var context = new ValidationContext<object>(instance);
-		ValidationResult validationResult = await validator.ValidateAsync(context);
-		if (validationResult.IsValid)
-			return EmptyErrors;
-
-		return validationResult
-			.Errors
-			.Select(x => new ValidationError(path: x.PropertyName, message: x.ErrorMessage))
-			.ToImmutableArray();
+		return validationErrors.ToImmutableList();
 	}
 }
