@@ -18,6 +18,7 @@ namespace DomainDrivenDesignWithCqrs.Server.Controllers
 		}
 
 		[Route("create")]
+		[HttpPost]
 		public Task<CreateOrganisationResponse> CreateAsync(CreateOrganisationCommand command) =>
 			Dispatcher.Execute(command);
 	}
