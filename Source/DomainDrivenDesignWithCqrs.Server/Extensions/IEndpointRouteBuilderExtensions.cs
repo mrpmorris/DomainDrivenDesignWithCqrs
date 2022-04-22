@@ -23,10 +23,10 @@ public static class IEndpointRouteBuilderExtensions
 		return endpoints;
 	}
 
-	private static async Task<IResult> ExecuteAsync<TRequest, TResponse>([FromBody] TRequest request, [FromServices] IRequestDispatcher dispatcher)
+	private static async Task<TResponse> ExecuteAsync<TRequest, TResponse>([FromBody] TRequest request, [FromServices] IRequestDispatcher dispatcher)
 		where TRequest : IRequest<TResponse>
 		where TResponse : ResponseBase, new()
 	{
-		return (await dispatcher.ExecuteAsync(request)).AsHttpResult();
+		return (await dispatcher.ExecuteAsync(request));
 	}
 }
