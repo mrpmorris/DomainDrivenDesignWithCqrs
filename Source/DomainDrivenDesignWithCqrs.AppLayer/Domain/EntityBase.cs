@@ -7,5 +7,5 @@ internal class EntityBase
 {
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Guid Guid { get; private set; } = Services.SequentialGuidGenerator.Next();
+	public Guid Id { get; private set; } = Services.SequentialGuidGenerator.Next();
 }
