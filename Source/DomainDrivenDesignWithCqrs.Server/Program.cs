@@ -1,13 +1,13 @@
 using System.Text.Json.Serialization;
 using DomainDrivenDesignWithCqrs.Server.Extensions;
+using Microsoft.AspNetCore.Http.Json;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services
-		.AddMvcCore()
-		.AddJsonOptions(x =>
+
+builder.Services.Configure<JsonOptions>(x => 
 		{
-			x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-			x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+			x.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+			x.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 		});
 
 DomainDrivenDesignWithCqrs.AppLayer.Services.Registration.Register(
