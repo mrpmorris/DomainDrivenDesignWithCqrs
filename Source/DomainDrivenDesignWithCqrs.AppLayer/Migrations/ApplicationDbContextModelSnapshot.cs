@@ -24,7 +24,7 @@ namespace DomainDrivenDesignWithCqrs.AppLayer.Migrations
 
             modelBuilder.Entity("DomainDrivenDesignWithCqrs.AppLayer.Domain.Organisation", b =>
                 {
-                    b.Property<Guid>("Guid")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -32,10 +32,11 @@ namespace DomainDrivenDesignWithCqrs.AppLayer.Migrations
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.HasKey("Guid");
+                    b.HasKey("Id");
 
                     b.ToTable("Organisations");
                 });

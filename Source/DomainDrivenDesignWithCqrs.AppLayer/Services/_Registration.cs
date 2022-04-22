@@ -17,7 +17,7 @@ public static class Registration
 		ArgumentNullException.ThrowIfNull(configuration);
 		services.AddHttpClient();
 		services.AddMediatR(typeof(Registration).Assembly);
-		services.AddAutoMapper(typeof(Registration));
+		services.AddAutoMapper(typeof(Registration).Assembly);
 		services.AddScoped<IDateTimeService, DateTimeService>();
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
 		services.AddScoped<IRequestDispatcher, RequestDispatcher>();

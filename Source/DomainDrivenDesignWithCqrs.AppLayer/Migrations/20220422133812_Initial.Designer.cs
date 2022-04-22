@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DomainDrivenDesignWithCqrs.AppLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220422095405_Initial")]
+    [Migration("20220422133812_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace DomainDrivenDesignWithCqrs.AppLayer.Migrations
 
             modelBuilder.Entity("DomainDrivenDesignWithCqrs.AppLayer.Domain.Organisation", b =>
                 {
-                    b.Property<Guid>("Guid")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -34,10 +34,11 @@ namespace DomainDrivenDesignWithCqrs.AppLayer.Migrations
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.HasKey("Guid");
+                    b.HasKey("Id");
 
                     b.ToTable("Organisations");
                 });
