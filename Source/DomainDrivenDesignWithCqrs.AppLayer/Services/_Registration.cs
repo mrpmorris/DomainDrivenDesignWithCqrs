@@ -17,17 +17,23 @@ public static class Registration
 		ArgumentNullException.ThrowIfNull(configuration);
 		services.AddHttpClient();
 		services.AddMediatR(typeof(Registration).Assembly);
-		services.AddAutoMapper(typeof(Registration).Assembly);
 		services.AddScoped<IDateTimeService, DateTimeService>();
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
-		services.AddScoped<IRequestDispatcher, RequestDispatcher>();
-		services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidatorMiddleware<,>));
 		services.AddDbContext<ApplicationDbContext>(options =>
 		{
 			options.UseSqlServer(configuration.GetConnectionString("default"));
 		});
+		RegisterCqrsClasses(services);
 		RegisterValidators(services);
 		RegisterRepositories(services);
+	}
+
+	private static void RegisterCqrsClasses(IServiceCollection services)
+	{
+		services.AddAutoMapper(typeof(Registration).Assembly);
+		services.AddScoped<IRequestDispatcher, RequestDispatcher>();
+		services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidatorMiddleware<,>));
+		services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestErrorHandlerMiddleware<,>));
 	}
 
 	private static void RegisterValidators(IServiceCollection services)

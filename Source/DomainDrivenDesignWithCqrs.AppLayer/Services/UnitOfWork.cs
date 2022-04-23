@@ -24,7 +24,7 @@ internal class UnitOfWork : IUnitOfWork
 		var result = new List<ValidationError>();
 		try
 		{
-			await DbContext.SaveChangesAsync();
+			await DbContext.SaveChangesAsync(cancellationToken);
 
 			return result;
 		}

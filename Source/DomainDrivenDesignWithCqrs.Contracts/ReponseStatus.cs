@@ -6,6 +6,5 @@ public enum ResponseStatus
 	UnexpectedError = 1,
 	BadRequest = 2,
 	ConcurrencyConflict = 3,
-	UniqueIndexConflict = 4,
-	Unauthorized = 5
+	Unauthorized = 4
 }

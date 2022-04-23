@@ -1,11 +1,6 @@
 ﻿using DomainDrivenDesignWithCqrs.AppLayer.Services;
 using DomainDrivenDesignWithCqrs.Contracts;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainDrivenDesignWithCqrs.AppLayer.Cqrs;
 
