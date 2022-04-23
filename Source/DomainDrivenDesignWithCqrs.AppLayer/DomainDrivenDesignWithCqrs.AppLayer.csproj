@@ -1,33 +1,39 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DomainDrivenDesignWithCqrs.Contracts\DomainDrivenDesignWithCqrs.Contracts.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\DomainDrivenDesignWithCqrs.Contracts\DomainDrivenDesignWithCqrs.Contracts.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="FluentValidation" Version="10.4.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.4.0" />
-    <PackageReference Include="MediatR" Version="10.0.1" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="Domain\Organisation.Invariants.cs">
+			<DependentUpon>Domain\Organisation.cs</DependentUpon>
+		</Content>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="11.0.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="FluentValidation" Version="10.4.0" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.4.0" />
+		<PackageReference Include="MediatR" Version="10.0.1" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+	</ItemGroup>
 
 </Project>
