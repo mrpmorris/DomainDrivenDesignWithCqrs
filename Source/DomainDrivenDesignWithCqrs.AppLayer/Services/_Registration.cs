@@ -23,6 +23,7 @@ public static class Registration
 		{
 			options.UseSqlServer(configuration.GetConnectionString("default"));
 		});
+		services.AddSingleton<ISearchService, SearchService>();
 		RegisterCqrsClasses(services);
 		RegisterValidators(services);
 		RegisterRepositories(services);

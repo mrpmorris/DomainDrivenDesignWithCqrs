@@ -2,13 +2,14 @@
 using DomainDrivenDesignWithCqrs.AppLayer.Domain;
 using DomainDrivenDesignWithCqrs.Contracts.Organisation;
 
-namespace DomainDrivenDesignWithCqrs.AppLayer.DomainMappers;
+namespace DomainDrivenDesignWithCqrs.AppLayer.Mappers;
 
 internal class OrganisationMappers : Profile
 {
 	public OrganisationMappers()
 	{
-		CreateMap<CreateOrEditOrganisationModel, Organisation>()
+		CreateMap<Organisation, CreateOrEditOrganisationModel>()
 			.ReverseMap();
+		CreateMap<Organisation, OrganisationSearchItemModel>();
 	}
 }

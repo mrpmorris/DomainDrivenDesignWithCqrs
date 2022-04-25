@@ -1,11 +1,14 @@
-﻿namespace DomainDrivenDesignWithCqrs.Contracts.Organisation
+﻿using System.Text.Json.Serialization;
+
+namespace DomainDrivenDesignWithCqrs.Contracts.Organisation
 {
 	public class CreateOrganisationResponse : ResponseBase
 	{
-		public Guid OrganisationId { get; set; }
+		public Guid OrganisationId { get; private set; }
 
 		public CreateOrganisationResponse() { }
 
+		[JsonConstructor]
 		public CreateOrganisationResponse(Guid organisationId)
 		{
 			if (organisationId == Guid.Empty)

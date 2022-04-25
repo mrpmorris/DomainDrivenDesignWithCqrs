@@ -2,28 +2,25 @@
 using DomainDrivenDesignWithCqrs.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace DomainDrivenDesignWithCqrs.Server.Extensions;
 
 public static class IEndpointRouteBuilderExtensions
 {
-	public static IEndpointRouteBuilder MapApiGet<TRequest, TResponse>(this IEndpointRouteBuilder endpoints, string url)
-		where TRequest : IRequest<TResponse>
-		where TResponse : ResponseBase, new()
-	{
-		endpoints.MapGet(url, ExecuteAsync<TRequest, TResponse>);
-		return endpoints;
-	}
-
 	public static IEndpointRouteBuilder MapApiPost<TRequest, TResponse>(this IEndpointRouteBuilder endpoints, string url)
 		where TRequest : IRequest<TResponse>
 		where TResponse : ResponseBase, new()
 	{
-		endpoints.MapPost(url, ExecuteAsync<TRequest, TResponse>);
+		endpoints.MapPost(
+			url,
+			([FromBody] TRequest request, [FromServices] IRequestDispatcher dispatcher) =>
+				ExecuteAsync<TRequest, TResponse>(request, dispatcher));
 		return endpoints;
 	}
 
-	private static async Task<TResponse> ExecuteAsync<TRequest, TResponse>([FromBody] TRequest request, [FromServices] IRequestDispatcher dispatcher)
+	private static async Task<TResponse> ExecuteAsync<TRequest, TResponse>(TRequest request, IRequestDispatcher dispatcher)
 		where TRequest : IRequest<TResponse>
 		where TResponse : ResponseBase, new()
 	{
