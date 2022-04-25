@@ -13,8 +13,8 @@ internal class ApplicationDbContext : DbContext
 	private readonly static Regex UniqueIndexRegex = new Regex(@"'UX_(\w+)_(\w+)'$");
 	private readonly IDomainInvariantsGuard DomainInvariantsGuard;
 
-	public DbSet<Organisation> Organisations { get; private set; } = null!;
-	public DbSet<OrganisationType> OrganisationTypes { get; private set; } = null!;
+	public DbSet<Organisation> Organisation { get; private set; } = null!;
+	public DbSet<OrganisationType> OrganisationType { get; private set; } = null!;
 
 	public ApplicationDbContext(
 		DbContextOptions<ApplicationDbContext> options,
@@ -55,21 +55,19 @@ internal class ApplicationDbContext : DbContext
 	{
 		base.OnModelCreating(builder);
 
-		var organisation = builder.Entity<Organisation>();
-		organisation
+		builder.Entity<Organisation>()
 			.HasIndex(x => x.Name)
-			.HasDatabaseName("IX_Organisation_Name").IsUnique();
+			.HasDatabaseName("IX_Organisations_Name").IsUnique();
+		builder.Entity<Organisation>()
+			.HasOne<OrganisationType>()
+			.WithMany()
+			.HasConstraintName("FK_Organisations_TypeId")
+			.OnDelete(DeleteBehavior.NoAction);
 
-		var organisationType  = builder.Entity<OrganisationType>();
-		organisationType
+		builder.Entity<OrganisationType>()
 			.HasIndex(x => x.Name)
-			.HasDatabaseName("IX_OrganisationType_Name")
+			.HasDatabaseName("IX_OrganisationTypes_Name")
 			.IsUnique();
-		organisation
-			.HasMany<Organisation>()
-			.WithOne()
-			.HasForeignKey(x => x.TypeId)
-			.HasConstraintName("FK_Organisation_TypeId");
 	}
 
 	private Task CheckDomainInvariantsAsync()
