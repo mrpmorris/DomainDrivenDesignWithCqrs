@@ -56,11 +56,20 @@ internal class ApplicationDbContext : DbContext
 		base.OnModelCreating(builder);
 
 		var organisation = builder.Entity<Organisation>();
-		organisation.HasIndex(x => x.Name).HasDatabaseName("IX_Organisation_Name").IsUnique();
+		organisation
+			.HasIndex(x => x.Name)
+			.HasDatabaseName("IX_Organisation_Name").IsUnique();
 
 		var organisationType  = builder.Entity<OrganisationType>();
-		organisationType.HasIndex(x => x.Name).HasDatabaseName("IX_OrganisationType_Name").IsUnique();
-		organisation.HasMany<Organisation>().WithOne().HasForeignKey(nameof(Organisation.Type));
+		organisationType
+			.HasIndex(x => x.Name)
+			.HasDatabaseName("IX_OrganisationType_Name")
+			.IsUnique();
+		organisation
+			.HasMany<Organisation>()
+			.WithOne()
+			.HasForeignKey(x => x.TypeId)
+			.HasConstraintName("FK_Organisation_TypeId");
 	}
 
 	private Task CheckDomainInvariantsAsync()
