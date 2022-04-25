@@ -13,7 +13,8 @@ internal class ApplicationDbContext : DbContext
 	private readonly static Regex UniqueIndexRegex = new Regex(@"'UX_(\w+)_(\w+)'$");
 	private readonly IDomainInvariantsGuard DomainInvariantsGuard;
 
-	internal DbSet<Organisation> Organisations { get; set; } = null!;
+	public DbSet<Organisation> Organisations { get; private set; } = null!;
+	public DbSet<OrganisationType> OrganisationTypes { get; private set; } = null!;
 
 	public ApplicationDbContext(
 		DbContextOptions<ApplicationDbContext> options,

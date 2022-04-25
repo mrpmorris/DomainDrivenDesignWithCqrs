@@ -49,5 +49,6 @@ public static class Registration
 	private static void RegisterRepositories(IServiceCollection services)
 	{
 		services.AddScoped<IOrganisationRepository, OrganisationRepository>();
+		services.AddScoped<IOrganisationTypeRepository, OrganisationTypeRepository>();
 	}
 }
