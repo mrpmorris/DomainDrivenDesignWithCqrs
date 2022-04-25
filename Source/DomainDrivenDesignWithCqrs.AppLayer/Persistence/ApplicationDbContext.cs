@@ -51,6 +51,18 @@ internal class ApplicationDbContext : DbContext
 		ChangeTracker.AutoDetectChangesEnabled = true;
 	}
 
+	protected override void OnModelCreating(ModelBuilder builder)
+	{
+		base.OnModelCreating(builder);
+
+		var organisation = builder.Entity<Organisation>();
+		organisation.HasIndex(x => x.Name).HasDatabaseName("IX_Organisation_Name").IsUnique();
+
+		var organisationType  = builder.Entity<OrganisationType>();
+		organisationType.HasIndex(x => x.Name).HasDatabaseName("IX_OrganisationType_Name").IsUnique();
+		organisation.HasMany<Organisation>().WithOne().HasForeignKey(nameof(Organisation.Type));
+	}
+
 	private Task CheckDomainInvariantsAsync()
 	{
 		var aggregateRoots = ChangeTracker

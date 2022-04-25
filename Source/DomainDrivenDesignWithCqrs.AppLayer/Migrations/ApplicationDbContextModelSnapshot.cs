@@ -28,7 +28,37 @@ namespace DomainDrivenDesignWithCqrs.AppLayer.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<Guid>("Type")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Organisation_Name");
+
+                    b.HasIndex("Type");
+
+                    b.ToTable("Organisations");
+                });
+
+            modelBuilder.Entity("DomainDrivenDesignWithCqrs.AppLayer.Domain.OrganisationType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -38,7 +68,20 @@ namespace DomainDrivenDesignWithCqrs.AppLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Organisations");
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_OrganisationType_Name");
+
+                    b.ToTable("OrganisationTypes");
+                });
+
+            modelBuilder.Entity("DomainDrivenDesignWithCqrs.AppLayer.Domain.Organisation", b =>
+                {
+                    b.HasOne("DomainDrivenDesignWithCqrs.AppLayer.Domain.Organisation", null)
+                        .WithMany()
+                        .HasForeignKey("Type")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
