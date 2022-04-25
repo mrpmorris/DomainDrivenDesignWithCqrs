@@ -1,12 +1,13 @@
-﻿namespace DomainDrivenDesignWithCqrs.Contracts.Organisation;
+﻿using System.Text.Json.Serialization;
+
+namespace DomainDrivenDesignWithCqrs.Contracts.Organisation;
 
 public class OrganisationSearchItemModel
 {
-	public Guid Id { get; set; }
-	public string Name { get; set; } = "";
+	public Guid Id { get; private set; }
+	public string Name { get; private set; } = "";
 
-	public OrganisationSearchItemModel() { }
-
+	[JsonConstructor]
 	public OrganisationSearchItemModel(Guid id, string? name)
 	{
 		ArgumentNullException.ThrowIfNull(name);
