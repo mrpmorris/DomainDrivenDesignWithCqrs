@@ -1,4 +1,4 @@
-﻿namespace DomainDrivenDesignWithCqrs.Contracts.Organisation;
+﻿namespace DomainDrivenDesignWithCqrs.Contracts.Organisations;
 
 public class OrganisationSearchResponse : PagedItemsResponseBase<OrganisationSearchItemModel>
 {

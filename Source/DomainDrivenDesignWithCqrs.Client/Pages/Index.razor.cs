@@ -1,4 +1,4 @@
-using DomainDrivenDesignWithCqrs.Contracts.Organisation;
+using DomainDrivenDesignWithCqrs.Contracts.Organisations;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 

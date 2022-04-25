@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 
-namespace DomainDrivenDesignWithCqrs.Contracts.Organisation;
+namespace DomainDrivenDesignWithCqrs.Contracts.Organisations;
 
 public class OrganisationSearchQuery : IRequest<OrganisationSearchResponse>
 {

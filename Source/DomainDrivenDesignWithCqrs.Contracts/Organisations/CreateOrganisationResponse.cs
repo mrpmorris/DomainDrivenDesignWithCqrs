@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace DomainDrivenDesignWithCqrs.Contracts.Organisation
+namespace DomainDrivenDesignWithCqrs.Contracts.Organisations
 {
 	public class CreateOrganisationResponse : ResponseBase
 	{

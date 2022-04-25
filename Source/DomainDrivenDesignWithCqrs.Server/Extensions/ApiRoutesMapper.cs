@@ -1,4 +1,4 @@
-﻿using DomainDrivenDesignWithCqrs.Contracts.Organisation;
+﻿using DomainDrivenDesignWithCqrs.Contracts.Organisations;
 
 namespace DomainDrivenDesignWithCqrs.Server.Extensions;
 

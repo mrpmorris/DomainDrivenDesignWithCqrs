@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace DomainDrivenDesignWithCqrs.Contracts.Organisation;
+namespace DomainDrivenDesignWithCqrs.Contracts.Organisations;
 
 public class CreateOrEditOrganisationModel
 {

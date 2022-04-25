@@ -2,7 +2,7 @@
 using DomainDrivenDesignWithCqrs.AppLayer.Domain;
 using DomainDrivenDesignWithCqrs.AppLayer.Persistence.Repositories;
 using DomainDrivenDesignWithCqrs.AppLayer.Services;
-using DomainDrivenDesignWithCqrs.Contracts.Organisation;
+using DomainDrivenDesignWithCqrs.Contracts.Organisations;
 using MediatR;
 
 namespace DomainDrivenDesignWithCqrs.AppLayer.Cqrs.Organisations;

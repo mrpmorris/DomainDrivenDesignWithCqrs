@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace DomainDrivenDesignWithCqrs.Contracts.Organisation;
+namespace DomainDrivenDesignWithCqrs.Contracts.Organisations;
 
 public class CreateOrganisationCommand : CreateOrEditOrganisationModel, IRequest<CreateOrganisationResponse>
 {
