@@ -16,6 +16,7 @@ public static class Registration
 		ArgumentNullException.ThrowIfNull(services);
 		ArgumentNullException.ThrowIfNull(configuration);
 		services.AddHttpClient();
+		services.AddAutoMapper(typeof(Registration).Assembly);
 		services.AddMediatR(typeof(Registration).Assembly);
 		services.AddScoped<IDateTimeService, DateTimeService>();
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -31,7 +32,6 @@ public static class Registration
 
 	private static void RegisterCqrsClasses(IServiceCollection services)
 	{
-		services.AddAutoMapper(typeof(Registration).Assembly);
 		services.AddScoped<IRequestDispatcher, RequestDispatcher>();
 		services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidatorMiddleware<,>));
 		services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestErrorHandlerMiddleware<,>));

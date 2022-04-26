@@ -57,16 +57,15 @@ internal class ApplicationDbContext : DbContext
 
 		builder.Entity<Organisation>()
 			.HasIndex(x => x.Name)
-			.HasDatabaseName("IX_Organisations_Name").IsUnique();
-		builder.Entity<Organisation>()
-			.HasOne<OrganisationType>()
-			.WithMany()
-			.HasConstraintName("FK_Organisations_TypeId")
-			.OnDelete(DeleteBehavior.NoAction);
-
+			.HasDatabaseName("UX_Organisation_Name").IsUnique();
+		//builder.Entity<Organisation>()
+		//	.HasOne<OrganisationType>(nameof(Domain.Organisation.TypeId))
+		//	.WithMany()
+		//	.HasConstraintName("FK_Organisation_TypeId")
+		//	.OnDelete(DeleteBehavior.NoAction);
 		builder.Entity<OrganisationType>()
 			.HasIndex(x => x.Name)
-			.HasDatabaseName("IX_OrganisationTypes_Name")
+			.HasDatabaseName("UX_OrganisationType_Name")
 			.IsUnique();
 	}
 

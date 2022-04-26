@@ -1,2 +1,2 @@
 @echo off
-dotnet ef migrations add "%1" --project=DomainDrivenDesignWithCqrs.AppLayer --startup-project=DomainDrivenDesignWithCqrs.Server
+dotnet ef migrations add "%1" --project=DomainDrivenDesignWithCqrs.AppLayer --output-dir "Persistence\DbMigrations" --startup-project=DomainDrivenDesignWithCqrs.Server
