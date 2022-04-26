@@ -31,7 +31,12 @@ internal class RequestErrorHandlerMiddleware<TRequest, TResponse> : IPipelineBeh
 		}
 		catch (DbUniqueIndexViolationException ex)
 		{
-			var errors = new[] { new ValidationError(path: ex.ColumnName, message: ex.Message) };
+			var errors = new[] { new ValidationError(path: ex.ColumnName, message: "Must be unique") };
+			return new TResponse { Status = ResponseStatus.BadRequest, ValidationErrors = errors };
+		}
+		catch (DbForeignKeyViolationException ex)
+		{
+			var errors = new[] { new ValidationError(path: ex.SourceColumnName, message: "Not found") };
 			return new TResponse { Status = ResponseStatus.BadRequest, ValidationErrors = errors };
 		}
 		catch (DomainInvariantViolationException ex)

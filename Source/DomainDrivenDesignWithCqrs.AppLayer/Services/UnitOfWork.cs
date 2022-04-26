@@ -1,12 +1,10 @@
-﻿using DomainDrivenDesignWithCqrs.AppLayer.Exceptions;
-using DomainDrivenDesignWithCqrs.AppLayer.Persistence;
-using DomainDrivenDesignWithCqrs.Contracts;
+﻿using DomainDrivenDesignWithCqrs.AppLayer.Persistence;
 
 namespace DomainDrivenDesignWithCqrs.AppLayer.Services;
 
 public interface IUnitOfWork
 {
-	Task<IEnumerable<ValidationError>> CommitAsync(CancellationToken cancellationToken = default);
+	Task CommitAsync(CancellationToken cancellationToken = default);
 
 }
 internal class UnitOfWork : IUnitOfWork
@@ -19,21 +17,6 @@ internal class UnitOfWork : IUnitOfWork
 		dbContext.EnableChangeTracking();
 	}
 
-	public async Task<IEnumerable<ValidationError>> CommitAsync(CancellationToken cancellationToken = default)
-	{
-		var result = new List<ValidationError>();
-		try
-		{
-			await DbContext.SaveChangesAsync(cancellationToken);
-
-			return result;
-		}
-		catch (DbUniqueIndexViolationException e)
-		{
-			return new[]
-			{
-				new ValidationError(path: e.ColumnName, message: "Must be unique")
-			};
-		}
-	}
+	public async Task CommitAsync(CancellationToken cancellationToken = default) =>
+		await DbContext.SaveChangesAsync(cancellationToken);
 }
