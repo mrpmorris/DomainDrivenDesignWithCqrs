@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DomainDrivenDesignWithCqrs.AppLayer.Domain;
+namespace DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 
 internal class EntityBase
 {

@@ -1,4 +1,4 @@
-﻿using DomainDrivenDesignWithCqrs.AppLayer.Domain;
+﻿using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DomainDrivenDesignWithCqrs.AppLayer.Persistence.Repositories;
@@ -14,7 +14,7 @@ internal class OrganisationRepository : RepositoryBase<Organisation>, IOrganisat
 {
 	public OrganisationRepository(ApplicationDbContext dbContext) : base(dbContext) { }
 
-	protected override DbSet<Organisation> Collection => DbContext.Organisations;
+	protected override DbSet<Organisation> Collection => DbContext.Organisation;
 	// Organisation has no aggregate parts
 	protected override IQueryable<Organisation> IncludeAggregateParts(IQueryable<Organisation> query) => query;
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DomainDrivenDesignWithCqrs.AppLayer.Domain;
+using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using DomainDrivenDesignWithCqrs.Contracts.Organisations;
 
 namespace DomainDrivenDesignWithCqrs.AppLayer.Mappers;

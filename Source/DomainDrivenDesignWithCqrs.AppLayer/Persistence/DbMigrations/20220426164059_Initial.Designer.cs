@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DomainDrivenDesignWithCqrs.AppLayer.Migrations
+namespace DomainDrivenDesignWithCqrs.AppLayer.Persistence.DbMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220422133812_Initial")]
+    [Migration("20220426164059_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,7 +30,35 @@ namespace DomainDrivenDesignWithCqrs.AppLayer.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<Guid>("TypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("UX_Organisation_Name");
+
+                    b.ToTable("Organisation");
+                });
+
+            modelBuilder.Entity("DomainDrivenDesignWithCqrs.AppLayer.Domain.OrganisationType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -40,7 +68,11 @@ namespace DomainDrivenDesignWithCqrs.AppLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Organisations");
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("UX_OrganisationType_Name");
+
+                    b.ToTable("OrganisationType");
                 });
 #pragma warning restore 612, 618
         }

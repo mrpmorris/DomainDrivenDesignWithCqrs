@@ -1,4 +1,5 @@
 ﻿using DomainDrivenDesignWithCqrs.AppLayer.Cqrs;
+using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using DomainDrivenDesignWithCqrs.AppLayer.Persistence;
 using DomainDrivenDesignWithCqrs.AppLayer.Persistence.Repositories;
 using FluentValidation;
@@ -16,6 +17,7 @@ public static class Registration
 		ArgumentNullException.ThrowIfNull(services);
 		ArgumentNullException.ThrowIfNull(configuration);
 		services.AddHttpClient();
+		services.AddAutoMapper(typeof(Registration).Assembly);
 		services.AddMediatR(typeof(Registration).Assembly);
 		services.AddScoped<IDateTimeService, DateTimeService>();
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -31,7 +33,6 @@ public static class Registration
 
 	private static void RegisterCqrsClasses(IServiceCollection services)
 	{
-		services.AddAutoMapper(typeof(Registration).Assembly);
 		services.AddScoped<IRequestDispatcher, RequestDispatcher>();
 		services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidatorMiddleware<,>));
 		services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestErrorHandlerMiddleware<,>));
@@ -43,7 +44,7 @@ public static class Registration
 		services.AddScoped<IValidationService, ValidationService>();
 		services.AddScoped<IDomainInvariantsGuard, DomainInvariantsGuard>();
 		services.AddValidatorsFromAssemblyContaining<Contracts.ValidationError>(includeInternalTypes: true);
-		services.AddValidatorsFromAssemblyContaining<Domain.EntityBase>(includeInternalTypes: true);
+		services.AddValidatorsFromAssemblyContaining<EntityBase>(includeInternalTypes: true);
 	}
 
 	private static void RegisterRepositories(IServiceCollection services)
