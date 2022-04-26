@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DomainDrivenDesignWithCqrs.AppLayer.Domain;
+namespace DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 
 internal abstract class AggregateRoot : EntityBase
 {

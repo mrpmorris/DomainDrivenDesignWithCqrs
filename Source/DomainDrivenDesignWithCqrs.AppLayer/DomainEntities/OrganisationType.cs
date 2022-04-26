@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace DomainDrivenDesignWithCqrs.AppLayer.Domain;
+namespace DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 
 internal class OrganisationType : AggregateRoot
 {

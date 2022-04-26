@@ -1,4 +1,4 @@
-﻿using DomainDrivenDesignWithCqrs.AppLayer.Domain;
+﻿using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using DomainDrivenDesignWithCqrs.AppLayer.Exceptions;
 using FluentValidation;
 using FluentValidation.Results;

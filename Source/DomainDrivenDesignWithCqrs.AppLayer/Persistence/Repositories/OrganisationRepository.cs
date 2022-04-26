@@ -1,4 +1,4 @@
-﻿using DomainDrivenDesignWithCqrs.AppLayer.Domain;
+﻿using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DomainDrivenDesignWithCqrs.AppLayer.Persistence.Repositories;

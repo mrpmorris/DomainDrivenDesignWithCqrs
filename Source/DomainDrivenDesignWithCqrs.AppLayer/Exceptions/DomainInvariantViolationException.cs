@@ -1,4 +1,4 @@
-﻿using DomainDrivenDesignWithCqrs.AppLayer.Domain;
+﻿using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using DomainDrivenDesignWithCqrs.Contracts;
 using System.Collections.Immutable;
 

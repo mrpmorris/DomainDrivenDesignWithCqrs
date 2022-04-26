@@ -1,4 +1,5 @@
 ﻿using DomainDrivenDesignWithCqrs.AppLayer.Cqrs;
+using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using DomainDrivenDesignWithCqrs.AppLayer.Persistence;
 using DomainDrivenDesignWithCqrs.AppLayer.Persistence.Repositories;
 using FluentValidation;
@@ -43,7 +44,7 @@ public static class Registration
 		services.AddScoped<IValidationService, ValidationService>();
 		services.AddScoped<IDomainInvariantsGuard, DomainInvariantsGuard>();
 		services.AddValidatorsFromAssemblyContaining<Contracts.ValidationError>(includeInternalTypes: true);
-		services.AddValidatorsFromAssemblyContaining<Domain.EntityBase>(includeInternalTypes: true);
+		services.AddValidatorsFromAssemblyContaining<EntityBase>(includeInternalTypes: true);
 	}
 
 	private static void RegisterRepositories(IServiceCollection services)

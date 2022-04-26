@@ -1,4 +1,4 @@
-﻿using DomainDrivenDesignWithCqrs.AppLayer.Domain;
+﻿using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using DomainDrivenDesignWithCqrs.AppLayer.Exceptions;
 using DomainDrivenDesignWithCqrs.AppLayer.Services;
 using Microsoft.Data.SqlClient;
@@ -58,15 +58,13 @@ internal class ApplicationDbContext : DbContext
 		builder.Entity<Organisation>()
 			.HasIndex(x => x.Name)
 			.HasDatabaseName("UX_Organisation_Name").IsUnique();
-		//builder.Entity<Organisation>()
-		//	.HasOne<OrganisationType>(nameof(Domain.Organisation.TypeId))
-		//	.WithMany()
-		//	.HasConstraintName("FK_Organisation_TypeId")
-		//	.OnDelete(DeleteBehavior.NoAction);
 		builder.Entity<OrganisationType>()
 			.HasIndex(x => x.Name)
 			.HasDatabaseName("UX_OrganisationType_Name")
 			.IsUnique();
+		builder.Entity<OrganisationType>()
+			.HasMany<Organisation>()
+			.WithOne(nameof(DomainEntities.OrganisationType));
 	}
 
 	private Task CheckDomainInvariantsAsync()
