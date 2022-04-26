@@ -11,7 +11,7 @@ namespace DomainDrivenDesignWithCqrs.AppLayer.Persistence;
 internal class ApplicationDbContext : DbContext
 {
 	private readonly static Regex UniqueIndexRegex =
-		new Regex(@"'UX_(\w+)_(\w+)'$", RegexOptions.Compiled);
+		new Regex(@"'IX_(\w+)_(\w+)'", RegexOptions.Compiled);
 	private readonly static Regex ForeignKeyRegex =
 		new Regex(@"""FK_(.*?)_(.*?)_(.*?)""", RegexOptions.Compiled);
 	private readonly IDomainInvariantsGuard DomainInvariantsGuard;
@@ -91,7 +91,7 @@ internal class ApplicationDbContext : DbContext
 	{
 		var match = UniqueIndexRegex.Match(sqlException.Message);
 		if (!match.Success)
-			throw new InvalidOperationException("Unique indexes should be named UX_TableName_ColumnName");
+			throw new InvalidOperationException("Unique indexes should be named IX_TableName_ColumnName");
 
 		string indexName = match.Groups[0].Value;
 		string tableName = match.Groups[1].Value;
