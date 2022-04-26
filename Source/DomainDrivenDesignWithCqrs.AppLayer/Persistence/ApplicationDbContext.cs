@@ -58,13 +58,14 @@ internal class ApplicationDbContext : DbContext
 		builder.Entity<Organisation>()
 			.HasIndex(x => x.Name)
 			.HasDatabaseName("UX_Organisation_Name").IsUnique();
+		builder.Entity<Organisation>()
+			.HasOne<OrganisationType>()
+			.WithMany()
+			.HasForeignKey(x => x.TypeId);
 		builder.Entity<OrganisationType>()
 			.HasIndex(x => x.Name)
 			.HasDatabaseName("UX_OrganisationType_Name")
 			.IsUnique();
-		builder.Entity<OrganisationType>()
-			.HasMany<Organisation>()
-			.WithOne(nameof(DomainEntities.OrganisationType));
 	}
 
 	private Task CheckDomainInvariantsAsync()
