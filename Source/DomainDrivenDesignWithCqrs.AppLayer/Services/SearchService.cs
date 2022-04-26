@@ -33,7 +33,7 @@ internal class SearchService : ISearchService
 		T[] items = Array.Empty<T>();
 
 		int count = await filtered.CountAsync();
-		int maxPossiblePageNumber = (int)Math.Ceiling(count / (decimal)pageSize);
+		int maxPossiblePageNumber = Math.Max(1, (int)Math.Ceiling(count / (decimal)pageSize));
 		pageNumber = Math.Min(pageNumber, maxPossiblePageNumber);
 		if (count > 0)
 		{
