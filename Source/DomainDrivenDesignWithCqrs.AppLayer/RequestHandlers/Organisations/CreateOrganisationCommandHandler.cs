@@ -5,7 +5,7 @@ using DomainDrivenDesignWithCqrs.AppLayer.Services;
 using DomainDrivenDesignWithCqrs.Contracts.Organisations;
 using MediatR;
 
-namespace DomainDrivenDesignWithCqrs.AppLayer.Cqrs.Organisations;
+namespace DomainDrivenDesignWithCqrs.AppLayer.RequestHandlers.Organisations;
 
 internal class CreateOrganisationCommandHandler : IRequestHandler<CreateOrganisationCommand, CreateOrganisationResponse>
 {

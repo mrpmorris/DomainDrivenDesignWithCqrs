@@ -2,7 +2,7 @@
 using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using DomainDrivenDesignWithCqrs.Contracts.Organisations;
 
-namespace DomainDrivenDesignWithCqrs.AppLayer.Mappers;
+namespace DomainDrivenDesignWithCqrs.AppLayer.ContractMappers;
 
 internal class OrganisationMappers : Profile
 {

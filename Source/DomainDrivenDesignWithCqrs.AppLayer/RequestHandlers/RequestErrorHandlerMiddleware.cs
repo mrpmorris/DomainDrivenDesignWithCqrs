@@ -3,7 +3,7 @@ using DomainDrivenDesignWithCqrs.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace DomainDrivenDesignWithCqrs.AppLayer.Cqrs;
+namespace DomainDrivenDesignWithCqrs.AppLayer.RequestHandlers;
 
 internal class RequestErrorHandlerMiddleware<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
 	where TRequest : IRequest<TResponse>

@@ -1,7 +1,7 @@
-﻿using DomainDrivenDesignWithCqrs.AppLayer.Cqrs;
-using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
+﻿using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using DomainDrivenDesignWithCqrs.AppLayer.Persistence;
 using DomainDrivenDesignWithCqrs.AppLayer.Persistence.Repositories;
+using DomainDrivenDesignWithCqrs.AppLayer.RequestHandlers;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
