@@ -50,7 +50,7 @@ internal class OrganisationSearchQueryHandler : IRequestHandler<OrganisationSear
 		//		|| x.Name.Contains(request.SearchPhrase))
 		//	.ProjectTo<OrganisationSearchItemModel>(Mapper.ConfigurationProvider);
 
-		PagedItemsModel < OrganisationSearchItemModel > result =
+		PagedItemsModel<OrganisationSearchItemModel> result =
 			await Search.SearchAsync(
 				pageNumber: request.PageNumber,
 				itemsPerPage: request.ItemsPerPage,
