@@ -4,7 +4,7 @@ namespace DomainDrivenDesignWithCqrs.Contracts.Organisations;
 
 public class CreateOrEditOrganisationModel
 {
-	public string? Name { get; set; }
+	public string Name { get; set; } = "";
 	public Guid TypeId { get; set; }
 
 	internal class Validator : AbstractValidator<CreateOrEditOrganisationModel>

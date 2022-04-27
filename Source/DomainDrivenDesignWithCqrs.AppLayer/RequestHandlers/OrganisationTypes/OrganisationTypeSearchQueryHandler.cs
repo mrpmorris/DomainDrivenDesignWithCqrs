@@ -27,19 +27,18 @@ internal class OrganisationTypeSearchQueryHandler : IRequestHandler<Organisation
 	public async Task<OrganisationTypeSearchResponse> Handle(OrganisationTypeSearchQuery request, CancellationToken cancellationToken)
 	{
 		IQueryable<OrganisationTypeSearchItemModel> source =
-			Repository.Query().ProjectTo<OrganisationTypeSearchItemModel>(Mapper.ConfigurationProvider);
+			Repository
+				.Query()
+				.Where(x => 
+					string.IsNullOrWhiteSpace(request.SearchPhrase)
+					|| x.Name.Contains(request.SearchPhrase))
+				.ProjectTo<OrganisationTypeSearchItemModel>(Mapper.ConfigurationProvider);
 
-		PagedItemsModel<OrganisationTypeSearchItemModel> result =
-			await Search.SearchAsync(
+		PagedItemsModel<OrganisationTypeSearchItemModel> result = await
+			Search.SearchAsync(
 				pageNumber: request.PageNumber,
-				pageSize: request.PageSize,
-				source: Repository.Query().ProjectTo<OrganisationTypeSearchItemModel>(Mapper.ConfigurationProvider),
-				addFilter:
-					source =>
-						string.IsNullOrWhiteSpace(request.SearchPhrase)
-						? source
-						: source.Where(x => x.Name.StartsWith(request.SearchPhrase)),
-				addOrdering: source => source.OrderBy(x => x.Name).ThenBy(x => x.Id));
+				itemsPerPage: request.ItemsPerPage,
+				source: source);
 
 		return new OrganisationTypeSearchResponse(result);
 	}

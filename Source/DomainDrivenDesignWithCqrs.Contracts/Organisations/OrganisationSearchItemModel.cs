@@ -1,18 +1,8 @@
-﻿using System.Text.Json.Serialization;
-
-namespace DomainDrivenDesignWithCqrs.Contracts.Organisations;
+﻿namespace DomainDrivenDesignWithCqrs.Contracts.Organisations;
 
 public class OrganisationSearchItemModel
 {
 	public Guid Id { get; private set; }
 	public string Name { get; private set; } = "";
-
-	[JsonConstructor]
-	public OrganisationSearchItemModel(Guid id, string? name)
-	{
-		ArgumentNullException.ThrowIfNull(name);
-
-		Id = id;
-		Name = name;
-	}
+	public string Type { get; private set; } = "";
 }
