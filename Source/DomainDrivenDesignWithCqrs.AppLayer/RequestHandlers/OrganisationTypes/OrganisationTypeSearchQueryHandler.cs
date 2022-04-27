@@ -32,6 +32,7 @@ internal class OrganisationTypeSearchQueryHandler : IRequestHandler<Organisation
 				.Where(x => 
 					string.IsNullOrWhiteSpace(request.SearchPhrase)
 					|| x.Name.Contains(request.SearchPhrase))
+				.OrderBy(x => x.Name).ThenBy(x => x.Id)
 				.ProjectTo<OrganisationTypeSearchItemModel>(Mapper.ConfigurationProvider);
 
 		PagedItemsModel<OrganisationTypeSearchItemModel> result = await
