@@ -43,12 +43,6 @@ internal class OrganisationSearchQueryHandler : IRequestHandler<OrganisationSear
 				select new Tuple<Organisation, OrganisationType>(o, t)
 			)
 			.ProjectTo<OrganisationSearchItemModel>(Mapper.ConfigurationProvider);
-		//OrganisationRepository
-		//	.Query()
-		//	.Where(x => 
-		//		string.IsNullOrWhiteSpace(request.SearchPhrase)
-		//		|| x.Name.Contains(request.SearchPhrase))
-		//	.ProjectTo<OrganisationSearchItemModel>(Mapper.ConfigurationProvider);
 
 		PagedItemsModel<OrganisationSearchItemModel> result =
 			await Search.SearchAsync(
