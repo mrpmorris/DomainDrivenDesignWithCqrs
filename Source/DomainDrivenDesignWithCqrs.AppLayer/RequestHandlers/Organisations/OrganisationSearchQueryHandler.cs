@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using DomainDrivenDesignWithCqrs.AppLayer.Persistence.Repositories;
+using DomainDrivenDesignWithCqrs.AppLayer.Persistence.ViewSources;
 using DomainDrivenDesignWithCqrs.AppLayer.Services;
 using DomainDrivenDesignWithCqrs.Contracts;
 using DomainDrivenDesignWithCqrs.Contracts.Organisations;
@@ -11,44 +12,31 @@ namespace DomainDrivenDesignWithCqrs.AppLayer.RequestHandlers.Organisations;
 
 internal class OrganisationSearchQueryHandler : IRequestHandler<OrganisationSearchQuery, OrganisationSearchResponse>
 {
-	private readonly IMapper Mapper;
-	private readonly IOrganisationRepository OrganisationRepository;
-	private readonly IOrganisationTypeRepository OrganisationTypeRepository;
+	private readonly IOrganisationSearchItemModelViewSource ViewSource;
 	private readonly ISearchService Search;
 
 	public OrganisationSearchQueryHandler(
-		IMapper mapper,
-		IOrganisationRepository organisationRepository,
-		IOrganisationTypeRepository organisationTypeRepository,
+		IOrganisationSearchItemModelViewSource viewSource,
 		ISearchService search)
 	{
-		Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-		OrganisationRepository = organisationRepository ?? throw new ArgumentNullException(nameof(organisationRepository));
-        OrganisationTypeRepository = organisationTypeRepository ?? throw new ArgumentNullException(nameof(organisationTypeRepository));
-        Search = search ?? throw new ArgumentNullException(nameof(search));
+		ViewSource = viewSource ?? throw new ArgumentNullException(nameof(viewSource));
+		Search = search ?? throw new ArgumentNullException(nameof(search));
 	}
 
 	public async Task<OrganisationSearchResponse> Handle(OrganisationSearchQuery request, CancellationToken cancellationToken)
 	{
-		IQueryable<OrganisationSearchItemModel> source =
-			(
-				from o in OrganisationRepository.Query()
-				join t in OrganisationTypeRepository.Query()
-					on o.TypeId equals t.Id
-				orderby o.Name, o.Id
-				where
-					string.IsNullOrWhiteSpace(request.SearchPhrase)
-					|| o.Name.Contains(request.SearchPhrase)
-					|| t.Name.Contains(request.SearchPhrase)
-				select new Tuple<Organisation, OrganisationType>(o, t)
-			)
-			.ProjectTo<OrganisationSearchItemModel>(Mapper.ConfigurationProvider);
-
 		PagedItemsModel<OrganisationSearchItemModel> result =
 			await Search.SearchAsync(
+				source: ViewSource.Views,
 				pageNumber: request.PageNumber,
 				itemsPerPage: request.ItemsPerPage,
-				source: source);
+				filter: x =>
+					string.IsNullOrWhiteSpace(request.SearchPhrase)
+					? x
+					: x.Where(x =>
+						x.Name.Contains(request.SearchPhrase)
+						|| x.Type.Contains(request.SearchPhrase)),
+				sort: x => x.OrderBy(x => x.Name).ThenBy(x => x.Id));
 
 		return new OrganisationSearchResponse(result);
 	}
