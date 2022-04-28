@@ -40,11 +40,12 @@ internal class OrganisationTypeSearchQueryHandler : IRequestHandler<Organisation
 				source: source,
 				pageNumber: request.PageNumber,
 				itemsPerPage: request.ItemsPerPage,
-				filter: x =>
-					string.IsNullOrWhiteSpace(request.SearchPhrase)
-					? x
-					: x.Where(x => x.Name.Contains(request.SearchPhrase)),
-				sort: x => x.OrderBy(x => x.Name).ThenBy(x => x.Id));
+				filter:
+					source =>
+						string.IsNullOrWhiteSpace(request.SearchPhrase)
+						? source
+						: source.Where(x => x.Name.Contains(request.SearchPhrase)),
+				sort: source => source.OrderBy(x => x.Name).ThenBy(x => x.Id));
 
 		return new OrganisationTypeSearchResponse(result);
 	}
