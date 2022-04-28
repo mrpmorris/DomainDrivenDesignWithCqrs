@@ -1,6 +1,7 @@
 ﻿using DomainDrivenDesignWithCqrs.AppLayer.DomainEntities;
 using DomainDrivenDesignWithCqrs.AppLayer.Persistence;
 using DomainDrivenDesignWithCqrs.AppLayer.Persistence.Repositories;
+using DomainDrivenDesignWithCqrs.AppLayer.Persistence.ViewSources;
 using DomainDrivenDesignWithCqrs.AppLayer.RequestHandlers;
 using FluentValidation;
 using MediatR;
@@ -27,8 +28,9 @@ public static class Registration
 		});
 		services.AddSingleton<ISearchService, SearchService>();
 		RegisterCqrsClasses(services);
-		RegisterValidators(services);
 		RegisterRepositories(services);
+		RegisterValidators(services);
+		RegisterViewSources(services);
 	}
 
 	private static void RegisterCqrsClasses(IServiceCollection services)
@@ -36,6 +38,12 @@ public static class Registration
 		services.AddScoped<IRequestDispatcher, RequestDispatcher>();
 		services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidatorMiddleware<,>));
 		services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestErrorHandlerMiddleware<,>));
+	}
+
+	private static void RegisterRepositories(IServiceCollection services)
+	{
+		services.AddScoped<IOrganisationRepository, OrganisationRepository>();
+		services.AddScoped<IOrganisationTypeRepository, OrganisationTypeRepository>();
 	}
 
 	private static void RegisterValidators(IServiceCollection services)
@@ -47,9 +55,9 @@ public static class Registration
 		services.AddValidatorsFromAssemblyContaining<EntityBase>(includeInternalTypes: true);
 	}
 
-	private static void RegisterRepositories(IServiceCollection services)
+	private static void RegisterViewSources(IServiceCollection services)
 	{
-		services.AddScoped<IOrganisationRepository, OrganisationRepository>();
-		services.AddScoped<IOrganisationTypeRepository, OrganisationTypeRepository>();
+		services.AddScoped<IOrganisationSearchItemModelViewSource, OrganisationSearchItemModelViewSource>();
+		services.AddScoped<IOrganisationTypeSearchItemModelViewSource, OrganisationTypeSearchItemModelViewSource>();
 	}
 }
