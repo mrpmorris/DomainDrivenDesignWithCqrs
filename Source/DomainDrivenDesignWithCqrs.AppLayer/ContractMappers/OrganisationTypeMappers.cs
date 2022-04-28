@@ -10,6 +10,5 @@ internal class OrganisationTypeMappers : Profile
 	{
 		CreateMap<OrganisationType, CreateOrEditOrganisationTypeModel>()
 			.ReverseMap();
-		CreateMap<OrganisationType, OrganisationTypeSearchItemModel>();
 	}
 }
