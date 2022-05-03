@@ -1,6 +1,7 @@
 ﻿using DomainDrivenDesignWithCqrs.Contracts;
 using FluentValidation;
 using FluentValidation.Results;
+using Morris.DataAnnotations.ObjectTreeValidator;
 using System.Collections.Immutable;
 
 namespace DomainDrivenDesignWithCqrs.AppLayer.Services;
@@ -48,6 +49,11 @@ internal class ValidationService : IValidationService
 		}
 		if (mustHaveAValidator && !hasValidator)
 			throw new InvalidOperationException($"Type \"{instance.GetType().Name}\" should have a validator");
+
+		// Add any errors from DataAnnotations
+		if (!RecursiveValidator.TryValidateObject(instance, out var recursiveValidationResults))
+			validationErrors.AddRange(
+					recursiveValidationResults.Select(x => new ValidationError(path: x.FullPath, message: x.ErrorMessage)));
 
 		return validationErrors.ToImmutableList();
 	}

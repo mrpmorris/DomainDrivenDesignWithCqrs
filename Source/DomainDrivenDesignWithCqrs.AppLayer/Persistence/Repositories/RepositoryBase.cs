@@ -142,30 +142,30 @@ internal abstract class RepositoryBase<T>
 
 	/// <summary>
 	///		Fetches an entity from the DB and ensures its
-	///		<see cref="AggregateRoot.RowVersion"/> has not
+	///		<see cref="AggregateRoot.Timestamp"/> has not
 	///		been changed since it was last retrieved.
 	/// </summary>
 	/// <para>
 	///		This allows an API to send a DTO to a client along
-	///		with a <see cref="AggregateRoot.RowVersion"/>, so that
+	///		with a <see cref="AggregateRoot.Timestamp"/>, so that
 	///		when the client instructs the API to save changes the
 	///		server can ensure no other process has updated the
 	///		entity in the meantime.
 	/// </para>
 	/// <param name="id">The <see cref="EntityBase.Id"/> of the entity.</param>
-	/// <param name="rowVersion">The version that was previously retrieved</param>
+	/// <param name="timestamp">The version that was previously retrieved</param>
 	/// <returns>The requested entity or null</returns>
 	/// <exception cref="DbConcurrencyException"></exception>
-	public async Task<T?> GetWithRowVersionAsync(
+	public async Task<T?> GetWithTimestampAsync(
 		Guid id,
-		byte[] rowVersion)
+		byte[] timestamp)
 	{
-		ArgumentNullException.ThrowIfNull(rowVersion);
+		ArgumentNullException.ThrowIfNull(timestamp);
 
 		T? result = await GetAsync(id);
 		if (result is not null)
 		{
-			if (!Enumerable.SequenceEqual(result.RowVersion, rowVersion))
+			if (!Enumerable.SequenceEqual(result.Timestamp, timestamp))
 				throw new DbConcurrencyException();
 		}
 		return result;
